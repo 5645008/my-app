@@ -16,13 +16,13 @@ function Login() {
     }
 
     try {
-      const response = await axios.post('/api/login', {
+      const response = await axios.post('http://52.78.154.108:3000/api/login', {
         user_id: userId,
         user_password: userPassword,
       });
 
       if (response.data.success) {
-        alert(response.data.message); // 로그인 성공 메시지
+        localStorage.setItem('user_id', response.data.user_id);  // 서버에서 받은 user_id 저장
         navigate('/main'); // 홈 페이지로 이동
       } else {
         setErrorMessage(response.data.message); // 로그인 실패 메시지 설정
