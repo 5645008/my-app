@@ -36,7 +36,7 @@ function Main() {
         const user_id = localStorage.getItem('user_id');  // 로그인 시 저장된 u_id 가져옴
 
         if (user_id) {
-          const response = await axios.get('http://52.78.154.108:3000/api/get-username', {
+          const response = await axios.get('https://moyak.store/api/get-username', {
             params: { user_id }
           });
 
@@ -94,7 +94,7 @@ function Main() {
         </Link>
 
         {/* 사진 검색 버튼 */}
-        <Link to="/test">
+        <Link to="/text-scan">
           <button className="camera-button">
             <span className="camera-icon"><img src={camera} width='50px' alt="Camera" /></span>
             <span>사진 검색</span> {/* 아이콘 아래 텍스트 출력 */}

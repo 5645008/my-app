@@ -39,9 +39,10 @@ function SignUp() {
     }
   
     try {
-      const response = await axios.post('http://52.78.154.108:3000/api/signup', {
+      const response = await axios.post('https://moyak.store/api/signup', {
         user_id: userId,
         user_password: userPassword,
+        user_name: userName,
         user_age: parseInt(userAge), // 나이를 int 형식으로 변환
         user_disease: userDiseases,
         user_gender: userGender,
