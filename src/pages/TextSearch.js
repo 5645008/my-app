@@ -19,7 +19,7 @@ function TextSearch() {
 
     if (term) {
       try {
-        const response = await axios.get(`http://localhost:3001/api/search?term=${term}`);
+        const response = await axios.get(`https://moyak.store/api/search?term=${term}`);
         setSuggestions(response.data);
       } catch (error) {
         console.error('Error fetching search suggestions:', error);
@@ -34,7 +34,7 @@ function TextSearch() {
     if (!searchTerm) return;
 
     try {
-      const response = await axios.get(`http://localhost:3001/api/medicine?name=${searchTerm}`);
+      const response = await axios.get(`https://moyak.store/api/medicine?name=${searchTerm}`);
       setSelectedMedicine(response.data); // 선택된 약 정보 설정
       setShowInfoBox(true); // 정보 박스 표시
     } catch (error) {
