@@ -93,7 +93,7 @@ function TextSearch() {
         <div className={`medicine-info-box ${showInfoBox ? 'visible' : ''}`}>
           <h3>{selectedMedicine.itemName}</h3>
           <p>{selectedMedicine.efcyQesitm}</p>
-          <button className="details-button">상세 설명 보기</button>
+          <button className="details-button">상세 정보 보기</button> {/* 추가된 버튼 */}
         </div>
       )}
 
