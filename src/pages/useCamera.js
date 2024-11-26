@@ -9,13 +9,6 @@ const useCamera = () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         setCameraStream(stream);
-
-        // 연결된 비디오 태그 가져오기
-        const video = document.querySelector('video');
-        if (video) {
-          video.srcObject = stream;
-          video.play();
-        }
       } catch (error) {
         console.error('Camera access error:', error);
       }
@@ -24,24 +17,25 @@ const useCamera = () => {
 
     return () => {
       if (cameraStream) {
-        cameraStream.getTracks().forEach((track) => track.stop());
+        cameraStream.getTracks().forEach(track => track.stop());
       }
     };
-  }, []);
+  }, [cameraStream]);
 
   const captureImage = () => {
     const video = document.querySelector('video');
-    if (!video) return;
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
-    const imgData = canvas.toDataURL('image/png');
-    setImage(imgData);
-    console.log('Captured Image:', imgData);
-  };
+    setImage(canvas.toDataURL('image/png'));
+    
+   
+    const imgData = canvas.toDataURL('image/png');    console.log('Captured Image:', imgData); 
+  
+    setImage(imgData);  };
 
-  return { image, captureImage };
+  return { cameraStream, image, captureImage };
 };
 
 export default useCamera;

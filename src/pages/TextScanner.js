@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { GOOGLE_CLOUD_VISION_API_KEY } from '../config/config';
+import './TextScanner.css';
 
 const TextScanner = ({ image }) => {
   const [text, setText] = useState('');
@@ -26,17 +27,17 @@ const TextScanner = ({ image }) => {
           ],
         }
       );
-      console.log('API response:', response.data);  
-      setText(response.data.responses[0].fullTextAnnotation.text);
+      console.log('API response:', response.data); 
+      setText(response.data.responses[0].fullTextAnnotation?.text || 'No text detected');
     } catch (error) {
       console.error('Error scanning text:', error);
     }
   };
 
   return (
-    <div>
-      <button onClick={scanText}>Scan Text</button>
-      {text && <p>Detected Text: {text}</p>}
+    <div className='text-scanner'>
+      <button onClick={scanText} className='scan-button'>Scan Text</button>
+      {text && <p className='text-output'>Detected Text: {text}</p>}
     </div>
   );
 };

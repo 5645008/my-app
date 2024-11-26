@@ -1,0 +1,13 @@
+/* ImagePreview.css */
+.image-preview {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+  
+  .preview-image {
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+  }
+  

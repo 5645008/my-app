@@ -1,0 +1,64 @@
+/* Camera.css */
+.camera-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  
+  /* Webcam video styling */
+  .camera-video {
+    width: 80%; 
+    max-width: 500px; 
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #000; 
+  }
+  
+  /* Button styling */
+  .capture-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  .capture-button:hover {
+    background-color: #0056b3;
+  }
+  .capture-button :disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .camera-container {
+      padding: 10px;
+    }
+  
+    .camera-video {
+      width: 100%; 
+    }
+  
+    .capture-button {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+  

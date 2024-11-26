@@ -1,13 +1,14 @@
-// ImagePreview.js
+// components/ImagePreview.js
 import React from 'react';
 
 const ImagePreview = ({ image }) => {
-  console.log(image);  // Ki?m tra gia tr? image
+  console.log(image); 
 
-  return image ? (
-    <img src={image} alt="Captured" style={{ width: '30%' }} />// ��i?u ch?nh kich th??c ?nh ��a ch?p
-  ) : (
-    <p>No image captured yet</p> // Thong bao n?u ch?a co ?nh
+  return (
+    <div className="image-preview">
+      <img src={image} alt="Captured" className="preview-image" />
+      <p>No image captured yet</p> 
+    </div>
   );
 };
 

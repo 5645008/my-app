@@ -1,0 +1,97 @@
+/*App.css*/
+.app-container {
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.camera-container {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px){
+  .app-container{
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .camera-container, .result-container{
+    width: 45%;
+  }
+}
+
+.result-container {
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+
+}
+
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-input {
+  width: 90%;
+  max-width: 400px; 
+  padding: 10px;
+  margin: 20px auto;  display: block; 
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-results {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+}
