@@ -16,7 +16,11 @@ function Login() {
     }
 
     try {
+<<<<<<< HEAD
       const response = await axios.post('https://moyal.store/', {
+=======
+      const response = await axios.post('https://moyak.store/api/login', {
+>>>>>>> upstream/main
         user_id: userId,
         user_password: userPassword,
       });
