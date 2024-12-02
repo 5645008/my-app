@@ -1,9 +1,11 @@
 // TextScanPage.js
 import React  from 'react';
-import Camera  from './Camera';
-import TextScanner  from './TextScanner';
-import ImagePreview  from './ImagePreview';
-import useCamera  from './useCamera';
+import { Link } from 'react-router-dom';
+import Camera  from './TextScan/Camera';
+import TextScanner  from './TextScan/TextScanner';
+import ImagePreview  from './TextScan/ImagePreview';
+import useCamera  from './TextScan/useCamera';
+import back from '../assets/back_arrow.png';
 
 
 
@@ -13,7 +15,8 @@ function TextScanPage() {
 
   return (
     <div className="TextScanPage">
-      <h1>Text Scanner App</h1>
+      <Link to="/main"><img src={back} width="20px" alt="back" /></Link>
+      <h1>Text Scanner</h1>
       <Camera onCapture={captureImage} />
       {image && (
         <>
