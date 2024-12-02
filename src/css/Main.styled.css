@@ -52,7 +52,8 @@
 }
 
 .search-button,
-.camera-button {
+.camera-button,
+.mypage-button {
   width: 150px;
   height: 150px;
   display: flex;
@@ -70,7 +71,8 @@
 }
 
 .search-icon,
-.camera-icon {
+.camera-icon,
+.mypage-icon {
   font-size: 24px;
   margin-bottom: 5px; /* 아이콘과 텍스트 간격 */
 }

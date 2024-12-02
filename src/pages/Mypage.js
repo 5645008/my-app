@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "./AuthProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import '../css/Mypage.styled.css';  // CSS 파일을 임포트
 
 const Mypage = () => {
   const { logout } = useContext(AuthContext); // AuthProvider에서 가져온 logout 함수
@@ -63,7 +64,7 @@ const Mypage = () => {
   };
 
   return (
-    <div>
+    <div className="mypage-container">
       <h1>마이페이지</h1>
 
       {!isEditing ? (
@@ -111,8 +112,10 @@ const Mypage = () => {
               <option value="여성">여성</option>
             </select>
           </label>
-          <button onClick={handleSave}>저장하기</button>
-          <button onClick={handleCancel}>취소</button>
+          <div className="mypage-actions">
+            <button onClick={handleSave}>저장하기</button>
+            <button onClick={handleCancel}>취소</button>
+          </div>
         </div>
       )}
 
