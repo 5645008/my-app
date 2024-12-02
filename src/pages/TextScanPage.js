@@ -1,9 +1,9 @@
 // TextScanPage.js
 import React  from 'react';
-import Camera  from './Camera';
-import TextScanner  from './TextScanner';
-import ImagePreview  from './ImagePreview';
-import useCamera  from './useCamera';
+import Camera  from '../pages/TextScan/Camera';
+import TextScanner  from '../pages/TextScan/TextScanner';
+import ImagePreview  from '../pages/TextScan/ImagePreview';
+import useCamera  from '../pages/TextScan/useCamera';
 
 
 
