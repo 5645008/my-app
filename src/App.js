@@ -6,6 +6,8 @@ import SignUp from './pages/SignUp';
 import Main from './pages/Main';
 import Calendar from './pages/Calendar';
 import TextSearch from './pages/TextSearch';
+import DetailsPage from './pages/DetailsPage'; // 상세 설명 페이지
+import TextScanPage from './pages/TextScanPage'; // 텍스트 스캔 페이지 추가
 
 function App() {
   return (
@@ -21,6 +23,10 @@ function App() {
         <Route path="/calendar" element={<Calendar />} />
         {/* 텍스트 검색 페이지 */}
         <Route path="/search" element={<TextSearch />} />
+        {/* 텍스트 스캔 페이지 */}
+        <Route path="/text-scan" element={<TextScanPage />} />
+        {/* 상세 설명 페이지 */}
+        <Route path="/details" element={<DetailsPage />} />
       </Routes>
     </Router>
   );

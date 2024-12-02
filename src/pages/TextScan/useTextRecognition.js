@@ -1,12 +1,12 @@
-// components/TextScanner.js
-import React, { useState } from 'react';
+// TextScan/useTextRecognition.js
+import { useState } from 'react';
 import axios from 'axios';
 import { GOOGLE_CLOUD_VISION_API_KEY } from '../config/config';
 
-const TextScanner = ({ image }) => {
+const useTextRecognition = () => {
   const [text, setText] = useState('');
 
-  const scanText = async () => {
+  const scanText = async (image) => {
     try {
       const response = await axios.post(
         `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_CLOUD_VISION_API_KEY}`,
@@ -14,7 +14,7 @@ const TextScanner = ({ image }) => {
           requests: [
             {
               image: {
-                content: image.split(',')[1],
+                content: image.split('data:image/jpeg;base64,')[1],
               },
               features: [
                 {
@@ -26,19 +26,13 @@ const TextScanner = ({ image }) => {
           ],
         }
       );
-      console.log('API response:', response.data);  
       setText(response.data.responses[0].fullTextAnnotation.text);
     } catch (error) {
       console.error('Error scanning text:', error);
     }
   };
 
-  return (
-    <div>
-      <button onClick={scanText}>Scan Text</button>
-      {text && <p>Detected Text: {text}</p>}
-    </div>
-  );
+  return { text, scanText };
 };
 
-export default TextScanner;
+export default useTextRecognition;
