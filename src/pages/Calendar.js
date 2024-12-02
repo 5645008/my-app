@@ -9,12 +9,15 @@ import 'react-calendar/dist/Calendar.css';
 
 const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
-const CalendarPage = ({ userId }) => {
+const CalendarPage = () => {
   const [medication, setMedication] = useState('');
   const [time, setTime] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDays, setSelectedDays] = useState([]);
   const [reminders, setReminders] = useState([]);
+  
+  // `localStorage`에서 user_id 가져오기
+  const userId = localStorage.getItem('user_id');
 
   // 알림 권한 요청
   useEffect(() => {
@@ -26,6 +29,11 @@ const CalendarPage = ({ userId }) => {
   // 사용자별 알림 데이터 불러오기
   useEffect(() => {
     const fetchReminders = async () => {
+      if (!userId) {
+        console.error('No user_id found in localStorage');
+        return;
+      }
+
       try {
         const response = await axios.get(`/api/reminders?user_id=${userId}`);
         setReminders(response.data);
