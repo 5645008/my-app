@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp';
 import Main from './pages/Main';
 import Calendar from './pages/Calendar';
 import TextSearch from './pages/TextSearch';
+import Mypage from "./pages/Mypage"; // 통합된 Mypage.js 파일
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/calendar" element={<Calendar />} />
         {/* 텍스트 검색 페이지 */}
         <Route path="/search" element={<TextSearch />} />
+        <Route path="/mypage" element={<Mypage />} /> 
+        {/* 통합된 마이페이지 */}
       </Routes>
     </Router>
   );
