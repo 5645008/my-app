@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/TextSearch.styled.css';
 import read from '../assets/reading_glasses.png';
@@ -11,6 +11,13 @@ function TextSearch() {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedMedicine, setSelectedMedicine] = useState(null); // 선택된 약 정보
   const [showInfoBox, setShowInfoBox] = useState(false); // 하단 정보 박스 표시 여부
+  const navigate = useNavigate(); // 페이지 이동에 사용
+
+  // 로컬 스토리지에서 최근 검색 기록을 불러오기
+  useEffect(() => {
+    const savedSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    setRecentSearches(savedSearches);
+  }, []);
 
   // 검색어 입력 시 핸들러
   const handleInputChange = async (e) => {
@@ -43,10 +50,11 @@ function TextSearch() {
 
     // 최근 검색어 추가 (최대 5개 유지)
     setRecentSearches((prevSearches) => {
-      const updatedSearches = [searchTerm, ...prevSearches];
+      const updatedSearches = [searchTerm, ...prevSearches.filter(item => item !== searchTerm)];
       if (updatedSearches.length > 5) {
         updatedSearches.pop(); // 오래된 검색어 제거
       }
+      localStorage.setItem('recentSearches', JSON.stringify(updatedSearches)); // 로컬 스토리지에 저장
       return updatedSearches;
     });
 
@@ -91,9 +99,22 @@ function TextSearch() {
       {/* 하단 정보 박스 */}
       {selectedMedicine && (
         <div className={`medicine-info-box ${showInfoBox ? 'visible' : ''}`}>
+          <button
+            className="close-button"
+            onClick={() => setShowInfoBox(false)} // 정보 창 숨기기
+          >
+            ✖
+          </button>
           <h3>{selectedMedicine.itemName}</h3>
           <p>{selectedMedicine.efcyQesitm}</p>
-          <button className="details-button">상세 정보 보기</button> {/* 추가된 버튼 */}
+          <button
+            className="details-button"
+            onClick={() =>
+              navigate('/details', { state: { medicineName: selectedMedicine.itemName } })
+            }
+          >
+            상세 정보 보기
+          </button>
         </div>
       )}
 
