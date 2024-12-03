@@ -1,33 +1,45 @@
+// src/contexts/AuthProvider.js
 import React, { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
+const AuthProvider = ({ children }) => {
+  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
+  const navigate = useNavigate();
 
-  // 토큰을 저장하는 함수
-  const saveToken = (receivedToken) => {
-    localStorage.setItem("token", receivedToken); // localStorage에 토큰 저장
-    setToken(receivedToken);
-  };
-
-  // 로그아웃 시 토큰을 제거하는 함수
-  const logout = () => {
-    localStorage.removeItem("token"); // 토큰 삭제
-    setToken(null);
-  };
-
-  // 페이지 새로고침 시 토큰을 확인하여 유지
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
+    // 앱 시작 시 localStorage에서 토큰을 가져와 상태를 설정
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      setAuthToken(token);
     }
   }, []);
 
+  // 로그인 함수
+  const login = (token) => {
+    localStorage.setItem('authToken', token);
+    setAuthToken(token);
+    navigate('/main'); // 로그인 성공 시 메인 페이지로 이동
+  };
+
+  // 로그아웃 함수
+  const logout = () => {
+    localStorage.removeItem('authToken');
+    setAuthToken(null);
+    navigate('/login'); // 로그아웃 후 로그인 페이지로 이동
+  };
+
+  // 로그인 상태 확인 함수
+  const isAuthenticated = () => {
+    return authToken !== null;
+  };
+
   return (
-    <AuthContext.Provider value={{ token, saveToken, logout }}>
+    <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
