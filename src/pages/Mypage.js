@@ -45,7 +45,7 @@ const Mypage = () => {
 
   const handleSave = async () => {
     try {
-      const response = await axios.post("http://52.78.154.108:3000/api/update-userinfo", userInfo);
+      const response = await axios.post("http://localhost:3000/api/update-userinfo", userInfo);
       if (response.data.success) {
         alert("사용자 정보가 성공적으로 업데이트되었습니다.");
         setIsEditing(false);
