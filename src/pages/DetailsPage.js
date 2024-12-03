@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import { useLocation, useNavigate } from 'react-router-dom';
+=======
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+>>>>>>> 599e280ac9f4b7ea927a507ea6d5ba4cfb3af3b1
 import '../css/DetailsPage.styled.css';
 import back from '../assets/back_arrow.png';
 
@@ -58,6 +63,7 @@ const DetailsPage = () => {
   }
 
   return (
+<<<<<<< HEAD
     <div className="details-page">
       <div className="details-header">
         {/* 뒤로 가기 버튼 */}
@@ -67,6 +73,11 @@ const DetailsPage = () => {
         <h1 className="details-title">{medicineName} 상세 정보</h1>
       </div>
 
+=======
+    <div>
+      <Link to="/main"><img src={back} width="20px" alt="back" /></Link>
+      <h1>{medicineName} 상세 정보</h1>
+>>>>>>> 599e280ac9f4b7ea927a507ea6d5ba4cfb3af3b1
       {details ? (
         <div className="details-container">
           <p className="details-item"><strong>제조사:</strong> {details.entpName}</p>

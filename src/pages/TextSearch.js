@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> 599e280ac9f4b7ea927a507ea6d5ba4cfb3af3b1
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/TextSearch.styled.css';
@@ -18,6 +22,8 @@ function TextSearch() {
     const savedSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
     setRecentSearches(savedSearches);
   }, []);
+
+  const navigate = useNavigate(); // 페이지 이동 함수
 
   // 검색어 입력 시 핸들러
   const handleInputChange = async (e) => {
@@ -60,6 +66,11 @@ function TextSearch() {
 
     setSearchTerm('');
     setSuggestions([]);
+  };
+
+  // "자세히 보기" 버튼 클릭 시 DetailsPage로 이동
+  const handleDetails = (medicineName) => {
+    navigate('/details', { state: { medicineName } }); // 약 이름 전달하며 페이지 이동
   };
 
   return (
@@ -107,6 +118,7 @@ function TextSearch() {
           </button>
           <h3>{selectedMedicine.itemName}</h3>
           <p>{selectedMedicine.efcyQesitm}</p>
+<<<<<<< HEAD
           <button
             className="details-button"
             onClick={() =>
@@ -115,6 +127,9 @@ function TextSearch() {
           >
             상세 정보 보기
           </button>
+=======
+          <button className="details-button" onClick={() => handleDetails(selectedMedicine.itemName)}>상세 정보 보기</button> {/* 추가된 버튼 */}
+>>>>>>> 599e280ac9f4b7ea927a507ea6d5ba4cfb3af3b1
         </div>
       )}
 
