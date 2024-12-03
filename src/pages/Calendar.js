@@ -9,15 +9,14 @@ import 'react-calendar/dist/Calendar.css';
 
 const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
+const userId = localStorage.getItem('user_id');
+
 const CalendarPage = () => {
   const [medication, setMedication] = useState('');
   const [time, setTime] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDays, setSelectedDays] = useState([]);
   const [reminders, setReminders] = useState([]);
-  
-  // `localStorage`에서 user_id 가져오기
-  const userId = localStorage.getItem('user_id');
 
   // 알림 권한 요청
   useEffect(() => {
@@ -29,13 +28,8 @@ const CalendarPage = () => {
   // 사용자별 알림 데이터 불러오기
   useEffect(() => {
     const fetchReminders = async () => {
-      if (!userId) {
-        console.error('No user_id found in localStorage');
-        return;
-      }
-
       try {
-        const response = await axios.get(`/api/reminders?user_id=${userId}`);
+        const response = await axios.get(`https://moyak.store/api/reminders?user_id=${userId}`);
         setReminders(response.data);
       } catch (error) {
         console.error('Error fetching reminders:', error);
@@ -62,7 +56,7 @@ const CalendarPage = () => {
     };
 
     try {
-      const response = await axios.post('/api/reminders', reminder);
+      const response = await axios.post('https://moyak.store/api/reminders', reminder);
       setReminders([...reminders, { ...reminder, id: response.data.id }]);
       alert(`${medication} 알림이 추가되었습니다.`);
     } catch (error) {
@@ -80,7 +74,7 @@ const CalendarPage = () => {
   // 알림 삭제
   const deleteReminder = async (id) => {
     try {
-      await axios.delete(`/api/reminders/${id}`);
+      await axios.delete(`https://moyak.store/api/reminders/${id}`);
       setReminders(reminders.filter((reminder) => reminder.id !== id));
       alert('알림이 삭제되었습니다.');
     } catch (error) {
@@ -97,7 +91,7 @@ const CalendarPage = () => {
     const updatedReminder = { ...reminder, sound_enabled: !reminder.sound_enabled };
 
     try {
-      await axios.put(`/api/reminders/${id}`, updatedReminder);
+      await axios.put(`https://moyak.store/api/reminders/${id}`, updatedReminder);
       setReminders(
         reminders.map((r) => (r.id === id ? { ...r, sound_enabled: updatedReminder.sound_enabled } : r))
       );
@@ -132,7 +126,7 @@ const CalendarPage = () => {
   
         // 알림 발송 여부를 true로 업데이트
         try {
-          await axios.put(`/api/reminders/${reminder.id}`, { ...reminder, notified: true });
+          await axios.put(`https://moyak.store/api/reminders/${reminder.id}`, { ...reminder, notified: true });
           setReminders(reminders.map((r) => (r.id === reminder.id ? { ...r, notified: true } : r)));
         } catch (error) {
           console.error('Error updating notification status:', error);
