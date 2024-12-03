@@ -22,7 +22,7 @@ const Mypage = () => {
       const userId = localStorage.getItem("user_id");
       if (userId) {
         try {
-          const response = await axios.get("http://52.78.154.108:3000/api/get-userinfo", {
+          const response = await axios.get("https://localhost:3000/api/get-userinfo", {
             params: { user_id: userId },
           });
           if (response.data.success) {
