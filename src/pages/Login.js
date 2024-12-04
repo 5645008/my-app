@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/Login.styled.css';
 import axios from 'axios';
-import { AuthContext } from '../contexts/AuthContext'; // AuthContext import
+import { AuthContext } from '../pages/AuthContext'; // AuthContext import
 
 function Login() {
   const { login } = useContext(AuthContext); // AuthContext에서 login 함수 가져오기
