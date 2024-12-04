@@ -6,6 +6,7 @@ import '../css/Main.styled.css';
 import camera from '../assets/camera.png';
 import calendar from '../assets/calendar_image.png';
 import glass from '../assets/reading_glasses.png';
+import mypage from '../assets/mypage.png';
 
 function Main() {
   const [today, setToday] = useState('');
@@ -33,7 +34,7 @@ function Main() {
     // 로그인한 사용자 이름 가져오기
     const fetchUserName = async () => {
       try {
-        const user_id = localStorage.getItem('user_id');  // 로그인 시 저장된 u_id 가져옴
+        const user_id = localStorage.getItem('user_id'); // 로그인 시 저장된 u_id 가져옴
 
         if (user_id) {
           const response = await axios.get('https://moyak.store/api/get-username', {
@@ -41,7 +42,7 @@ function Main() {
           });
 
           if (response.data.success) {
-            setUserName(response.data.user_name);  // 이름을 상태에 저장
+            setUserName(response.data.user_name); // 이름을 상태에 저장
           } else {
             alert('사용자 이름을 찾을 수 없습니다.');
           }
@@ -52,10 +53,8 @@ function Main() {
       }
     };
 
-    fetchUserName();  // 이름을 가져오는 함수 호출
+    fetchUserName(); // 이름을 가져오는 함수 호출
   }, []);
-
-
 
   return (
     <div className="main">
@@ -66,7 +65,9 @@ function Main() {
         {/* 캘린더 아이콘을 클릭하면 캘린더 페이지로 이동 */}
         <Link to="/calendar">
           <button className="calendar-button">
-            <span className="calendar-icon"><img src={calendar} width='30px' alt="Calendar" /></span>
+            <span className="calendar-icon">
+              <img src={calendar} width="30px" alt="Calendar" />
+            </span>
           </button>
         </Link>
       </div>
@@ -88,7 +89,9 @@ function Main() {
         {/* 약 검색 버튼 */}
         <Link to="/search">
           <button className="search-button">
-            <span className="search-icon"><img src={glass} width='50px' alt="Search" /></span>
+            <span className="search-icon">
+              <img src={glass} width="50px" alt="Search" />
+            </span>
             <span>약 검색</span> {/* 아이콘 아래 텍스트 출력 */}
           </button>
         </Link>
@@ -96,12 +99,24 @@ function Main() {
         {/* 사진 검색 버튼 */}
         <Link to="/text-scan">
           <button className="camera-button">
-            <span className="camera-icon"><img src={camera} width='50px' alt="Camera" /></span>
+            <span className="camera-icon">
+              <img src={camera} width="50px" alt="Camera" />
+            </span>
             <span>사진 검색</span> {/* 아이콘 아래 텍스트 출력 */}
           </button>
         </Link>
       </div>
-    </div>
+
+        {/* 마이페이지 버튼 */}
+        <Link to="/mypage">
+          <button className="mypage-button">
+            <span className="mypage-icon">
+              <img src={mypage} width="50px" alt="Mypage" />
+            </span>
+            <span>마이페이지</span>
+          </button>
+        </Link>
+      </div>
   );
 }
 

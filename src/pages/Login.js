@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+// src/pages/Login.js
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/Login.styled.css';
 import axios from 'axios';
+import { AuthContext } from '../contexts/AuthContext'; // AuthContext import
 
 function Login() {
+  const { login } = useContext(AuthContext); // AuthContext에서 login 함수 가져오기
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,7 +25,8 @@ function Login() {
       });
 
       if (response.data.success) {
-        localStorage.setItem('user_id', response.data.user_id);  // 서버에서 받은 user_id 저장
+        const token = response.data.token; // 서버에서 받은 토큰
+        login(token); // AuthContext의 login 함수로 토큰 저장
         navigate('/main'); // 홈 페이지로 이동
       } else {
         setErrorMessage(response.data.message); // 로그인 실패 메시지 설정
