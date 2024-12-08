@@ -1,7 +1,8 @@
 // src/pages/Main.js
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../pages/AuthContext';  // AuthContext 임포트
 import '../css/Main.styled.css';
 import camera from '../assets/camera.png';
 import calendar from '../assets/calendar_image.png';
@@ -12,6 +13,15 @@ function Main() {
   const [today, setToday] = useState('');
   const [todayMedications, setTodayMedications] = useState([]);
   const [userName, setUserName] = useState('');
+  const { authToken } = useContext(AuthContext);  // 로그인 상태 체크
+  const navigate = useNavigate();
+
+  // 로그인되지 않은 경우 로그인 페이지로 리디렉션
+  useEffect(() => {
+    if (!authToken) {
+      navigate('/');  // 로그인 페이지로 이동
+    }
+  }, [authToken, navigate]);
 
   // 현재 날짜를 가져와서 YYYY-MM-DD 형식으로 설정
   useEffect(() => {
@@ -54,7 +64,7 @@ function Main() {
     };
 
     fetchUserName(); // 이름을 가져오는 함수 호출
-  }, []);
+  }, [authToken]);
 
   return (
     <div className="main">
@@ -105,7 +115,6 @@ function Main() {
             <span>사진 검색</span> {/* 아이콘 아래 텍스트 출력 */}
           </button>
         </Link>
-      </div>
 
         {/* 마이페이지 버튼 */}
         <Link to="/mypage">
@@ -114,9 +123,10 @@ function Main() {
               <img src={mypage} width="50px" alt="Mypage" />
             </span>
             <span>마이페이지</span>
-          </button>
+         </button>
         </Link>
       </div>
+    </div>
   );
 }
 
