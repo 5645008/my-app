@@ -1,12 +1,10 @@
-// src/pages/Mypage.js
-import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "./AuthProvider";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import '../css/Mypage.styled.css';  // CSS 파일을 임포트
+import "../css/Mypage.styled.css"; // CSS 파일
+import backArrow from "../assets/back_arrow.png"; // 뒤로가기 화살표 이미지
 
 const Mypage = () => {
-  const { logout } = useContext(AuthContext); // AuthProvider에서 가져온 logout 함수
   const [userInfo, setUserInfo] = useState({
     user_id: "",
     user_name: "",
@@ -15,37 +13,54 @@ const Mypage = () => {
     user_gender: "",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState(""); // 현재 비밀번호
+  const [newPassword, setNewPassword] = useState(""); // 새로운 비밀번호
+  const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인
   const navigate = useNavigate();
 
+  // 사용자 정보를 가져오는 API 요청
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const userId = localStorage.getItem("user_id");
-      if (userId) {
-        try {
-          const response = await axios.get("https://localhost:3000/api/get-userinfo", {
-            params: { user_id: userId },
-          });
-          if (response.data.success) {
-            setUserInfo(response.data.userInfo);
-          } else {
-            alert("사용자 정보를 불러오지 못했습니다.");
-          }
-        } catch (error) {
-          console.error("사용자 정보 요청 오류:", error);
-          alert("사용자 정보를 가져오는 중 오류가 발생했습니다.");
+      try {
+        const userId = localStorage.getItem("user_id");
+        if (!userId) {
+          alert("로그인이 필요합니다.");
+          navigate("/");
+          return;
         }
+
+        const response = await axios.get("https://moyak.store/api/get-userinfo", {
+          params: { user_id: userId },
+        });
+
+        if (response.data.success) {
+          setUserInfo(response.data.userInfo);
+        } else {
+          alert("사용자 정보를 불러오지 못했습니다.");
+        }
+      } catch (error) {
+        console.error("사용자 정보 요청 오류:", error);
+        alert("사용자 정보를 가져오는 중 오류가 발생했습니다.");
       }
     };
 
     fetchUserInfo();
-  }, []);
+  }, [navigate]);
 
-  const handleEdit = () => setIsEditing(true);
-  const handleCancel = () => setIsEditing(false);
-
+  // 사용자 정보를 업데이트하는 API 요청
   const handleSave = async () => {
+    if (newPassword !== confirmPassword) {
+      alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      return;
+    }
+
     try {
-      const response = await axios.post("http://localhost:3000/api/update-userinfo", userInfo);
+      const response = await axios.post("https://moyak.store/api/update-userinfo", {
+        ...userInfo,
+        currentPassword, // 현재 비밀번호 추가
+        newPassword, // 새 비밀번호 추가
+      });
+
       if (response.data.success) {
         alert("사용자 정보가 성공적으로 업데이트되었습니다.");
         setIsEditing(false);
@@ -58,13 +73,21 @@ const Mypage = () => {
     }
   };
 
+  // 로그아웃 기능
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user_token");
+    alert("로그아웃되었습니다.");
+    window.location.reload();
+    navigate("/");
   };
 
   return (
     <div className="mypage-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        <img src={backArrow} alt="Back" className="back-arrow-img" />
+      </button>
+
       <h1>마이페이지</h1>
 
       {!isEditing ? (
@@ -74,7 +97,7 @@ const Mypage = () => {
           <p>나이: {userInfo.user_age}</p>
           <p>질병: {userInfo.user_disease}</p>
           <p>성별: {userInfo.user_gender}</p>
-          <button onClick={handleEdit}>수정하기</button>
+          <button onClick={() => setIsEditing(true)}>수정하기</button>
         </div>
       ) : (
         <div>
@@ -112,9 +135,36 @@ const Mypage = () => {
               <option value="여성">여성</option>
             </select>
           </label>
+
+          {/* 비밀번호 변경 */}
+          <label>
+            현재 비밀번호:{" "}
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </label>
+          <label>
+            새 비밀번호:{" "}
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </label>
+          <label>
+            새 비밀번호 확인:{" "}
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </label>
+
           <div className="mypage-actions">
             <button onClick={handleSave}>저장하기</button>
-            <button onClick={handleCancel}>취소</button>
+            <button onClick={() => setIsEditing(false)}>취소</button>
           </div>
         </div>
       )}

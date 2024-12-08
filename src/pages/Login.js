@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/Login.styled.css';
@@ -26,8 +25,11 @@ function Login() {
 
       if (response.data.success) {
         const token = response.data.token; // 서버에서 받은 토큰
+        localStorage.setItem('authToken', token); // 토큰 저장
+        localStorage.setItem('user_id', userId);  // user_id 저장
         login(token); // AuthContext의 login 함수로 토큰 저장
         navigate('/main'); // 홈 페이지로 이동
+        window.location.reload(); // 페이지 새로고침
       } else {
         setErrorMessage(response.data.message); // 로그인 실패 메시지 설정
       }

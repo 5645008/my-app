@@ -70,6 +70,35 @@
   margin-top: 20px;
 }
 
+/* 마이페이지 버튼 스타일 */
+.mypage-button {
+  width: 110px; /* 모바일 화면을 고려하여 크기 축소 */
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #000;
+  border-radius: 20px;
+  font-size: 12px; /* 텍스트 크기 축소 */
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #fff;
+  text-decoration: none;
+}
+
+.mypage-icon {
+  font-size: 24px;
+  margin-bottom: 5px; /* 아이콘과 텍스트 간격 */
+}
+
+.mypage-button span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #000; /* 텍스트 색상 */
+}
+
+
 .search-button,
 .camera-button {
   width: 110px; /* 모바일 화면을 고려하여 크기 축소 */
