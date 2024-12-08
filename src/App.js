@@ -28,6 +28,10 @@ function App() {
           <Route path="/search" element={<TextSearch />} />
           {/* 마이 페이지 */}
           <Route path="/mypage" element={<Mypage />} />
+          {/* 디테일 페이지 */}
+          <Route path="/details" element={<DetailsPage />} />
+          {/* 텍스트 스캔 페이지 */}
+          <Route path="/text-scan" element={<TextScanPage />} />
         </Routes>
       </Router>
     </AuthProvider>

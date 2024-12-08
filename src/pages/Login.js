@@ -1,12 +1,9 @@
-// src/pages/Login.js
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/Login.styled.css';
 import axios from 'axios';
-import { AuthContext } from '../pages/AuthContext'; // AuthContext import
 
 function Login() {
-  const { login } = useContext(AuthContext); // AuthContext에서 login 함수 가져오기
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -25,8 +22,11 @@ function Login() {
       });
 
       if (response.data.success) {
-        const token = response.data.token; // 서버에서 받은 토큰
-        login(token); // AuthContext의 login 함수로 토큰 저장
+        // 로그인 성공 시 로컬 스토리지에서 reminders 삭제
+        localStorage.removeItem('reminders'); // 알람 데이터 삭제
+        localStorage.removeItem('recentSearches'); // 최근 검색 기록도 삭제 (기존 구현 포함)
+
+        localStorage.setItem('user_id', response.data.user_id); // 서버에서 받은 user_id 저장
         navigate('/main'); // 홈 페이지로 이동
       } else {
         setErrorMessage(response.data.message); // 로그인 실패 메시지 설정
