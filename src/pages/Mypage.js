@@ -13,16 +13,19 @@ const Mypage = () => {
     user_gender: "",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState(""); // 현재 비밀번호
+  const [newPassword, setNewPassword] = useState(""); // 새로운 비밀번호
+  const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인
   const navigate = useNavigate();
 
   // 사용자 정보를 가져오는 API 요청
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const userId = localStorage.getItem("user_id"); // 로컬스토리지에서 user_id 가져오기
+        const userId = localStorage.getItem("user_id");
         if (!userId) {
           alert("로그인이 필요합니다.");
-          navigate("/"); // 로그인 페이지로 리디렉션
+          navigate("/");
           return;
         }
 
@@ -46,12 +49,21 @@ const Mypage = () => {
 
   // 사용자 정보를 업데이트하는 API 요청
   const handleSave = async () => {
+    if (newPassword !== confirmPassword) {
+      alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      return;
+    }
+
     try {
-      const response = await axios.post("https://moyak.store/api/update-userinfo", userInfo);
+      const response = await axios.post("https://moyak.store/api/update-userinfo", {
+        ...userInfo,
+        currentPassword, // 현재 비밀번호 추가
+        newPassword, // 새 비밀번호 추가
+      });
 
       if (response.data.success) {
         alert("사용자 정보가 성공적으로 업데이트되었습니다.");
-        setIsEditing(false); // 편집 모드 종료
+        setIsEditing(false);
       } else {
         alert("사용자 정보를 업데이트하는 데 실패했습니다.");
       }
@@ -63,16 +75,15 @@ const Mypage = () => {
 
   // 로그아웃 기능
   const handleLogout = () => {
-    localStorage.removeItem("user_id"); // 로컬스토리지에서 user_id 제거
-    localStorage.removeItem("user_token"); // 로그인 토큰도 제거
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user_token");
     alert("로그아웃되었습니다.");
-    window.location.reload(); // 새로고침 강제 실행
-    navigate("/"); // 로그인 페이지로 이동
+    window.location.reload();
+    navigate("/");
   };
 
   return (
     <div className="mypage-container">
-      {/* 뒤로가기 버튼 */}
       <button className="back-button" onClick={() => navigate(-1)}>
         <img src={backArrow} alt="Back" className="back-arrow-img" />
       </button>
@@ -124,6 +135,33 @@ const Mypage = () => {
               <option value="여성">여성</option>
             </select>
           </label>
+
+          {/* 비밀번호 변경 */}
+          <label>
+            현재 비밀번호:{" "}
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </label>
+          <label>
+            새 비밀번호:{" "}
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </label>
+          <label>
+            새 비밀번호 확인:{" "}
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </label>
+
           <div className="mypage-actions">
             <button onClick={handleSave}>저장하기</button>
             <button onClick={() => setIsEditing(false)}>취소</button>
